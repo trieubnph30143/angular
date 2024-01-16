@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class CategoryService {
   private api =
-    'https://singular-pothos-59ff0b.netlify.app/.netlify/functions/api/category';
+    'https://earnest-queijadas-b3c6d2.netlify.app/.netlify/functions/api/category';
 
   constructor(private http: HttpClient) {}
   getCategory(): Observable<any> {
