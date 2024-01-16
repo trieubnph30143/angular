@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ProductService {
   private api =
-    'https://hilarious-zabaione-9cf395.netlify.apps/.netlify/functions/api/product';
+    'https://hilarious-zabaione-9cf395.netlify.app/.netlify/functions/api/product';
 
   constructor(private http: HttpClient) {}
 
