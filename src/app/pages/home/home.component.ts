@@ -14,14 +14,12 @@ import { ProductCartComponent } from '../../components/product-cart/product-cart
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  productService = inject(ProductService); // inject vao bien
-
+  productService = inject(ProductService);
   productList: any = [];
 
   ngOnInit(): void {
     this.productService
-      .getProductList()
-      .subscribe((products: any) => (this.productList = products)); // callApi.then(cb fuc)
+      .getProduct()
+      .subscribe((products: any) => (this.productList = products.data));
   }
-  //contruct
 }

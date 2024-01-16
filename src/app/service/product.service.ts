@@ -1,15 +1,30 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Product, ProductAdmin } from '../types/Product';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  apiUrl = 'https://fakestoreapi.com/products';
-  http = inject(HttpClient);
-  constructor() {}
+  private api =
+    'https://courageous-taiyaki-0f7607.netlify.app/.netlify/functions/api/product';
 
-  getProductList() {
-    return this.http.get(this.apiUrl);
+  constructor(private http: HttpClient) {}
+
+  getProduct(): Observable<any> {
+    return this.http.get<any>(this.api);
+  }
+  getOneProduct(id: string): Observable<any> {
+    return this.http.get<any>(`${this.api}/${id}`);
+  }
+  deleteProduct(id: string) {
+    return this.http.delete(`${this.api}/${id}`);
+  }
+  addProduct(product: any) {
+    return this.http.post(`${this.api}`, product);
+  }
+  updateProduct(product: any) {
+    return this.http.put(`${this.api}/${product.id}`, product);
   }
 }
