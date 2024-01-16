@@ -11,8 +11,7 @@ import {
 
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { CategoryService } from '../../../service/categorys.service';
-import { Category } from '../../../types/Category';
+import { CategoryService } from '../../../service/category.service';
 
 @Component({
   selector: 'app-create',
