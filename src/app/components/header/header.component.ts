@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, RouterLink, NgIf],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
   title = 'Homeppage';
+  token = false;
   menuList = [
     {
       label: 'Home',
