@@ -65,7 +65,7 @@ export class SignupComponent {
               this.messageService.add({
                 severity: 'error',
                 summary: 'Error',
-                detail: data.message,
+                detail: 'Email này đã Tồn Tại!',
               });
             }
           });
