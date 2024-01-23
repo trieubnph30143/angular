@@ -1,8 +1,8 @@
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Component, inject } from '@angular/core';
 import { NgFor } from '@angular/common';
-import { ProductAdmin } from '../../../types/Product';
-import { ProductService } from '../../../service/product.service';
+import { ProductAdmin } from '../../../../types/Product';
+import { ProductService } from '../../../../service/product.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { ToastModule } from 'primeng/toast';

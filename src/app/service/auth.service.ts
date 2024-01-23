@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   private api =
-    'https://courageous-taiyaki-0f7607.netlify.app/.netlify/functions/api/auth';
+    'https://earnest-queijadas-b3c6d2.netlify.app/.netlify/functions/api/auth';
 
   constructor(private http: HttpClient) {}
 

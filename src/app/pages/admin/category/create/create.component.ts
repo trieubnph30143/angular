@@ -1,6 +1,4 @@
-import { ProductService } from './../../../service/product.service';
-import { NgFor, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,9 +7,10 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeTemplate } from 'primeng/api';
+import { NgFor, NgIf } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
-import { CategoryService } from '../../../service/category.service';
+import { CategoryService } from '../../../../service/category.service';
 
 @Component({
   selector: 'app-create',
@@ -21,40 +20,30 @@ import { CategoryService } from '../../../service/category.service';
   styleUrl: './create.component.css',
   providers: [MessageService],
 })
-export class CreateComponent {
+export class AddCategoryComponent {
   userForm: FormGroup;
-  categories: any = [];
+
   constructor(
-    private productService: ProductService,
     private categoryService: CategoryService,
     private formBuilder: FormBuilder,
     private messageService: MessageService
   ) {
     this.userForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      price: ['', Validators.required],
-      image: ['', Validators.required],
-      categoryId: ['', Validators.required],
-    });
-  }
-  ngOnInit(): void {
-    this.categoryService.getCategory().subscribe((data: any) => {
-      this.categories = data.data;
+      name: ['', Validators.required],
     });
   }
 
   onSubmit() {
     if (this.userForm.valid) {
       const formData = this.userForm.value;
-
-      this.productService.addProduct(formData).subscribe((data: any) => {
+      this.categoryService.addCategory(formData).subscribe((data: any) => {
         if (data.status === 0) {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
             detail: 'Message Content',
           });
+
           this.userForm.reset();
         }
       });

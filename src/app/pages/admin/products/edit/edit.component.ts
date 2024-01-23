@@ -11,8 +11,8 @@ import { ToastModule } from 'primeng/toast';
 
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from '../../../service/product.service';
-import { CategoryService } from '../../../service/category.service';
+import { ProductService } from '../../../../service/product.service';
+import { CategoryService } from '../../../../service/category.service';
 
 @Component({
   selector: 'app-update',
