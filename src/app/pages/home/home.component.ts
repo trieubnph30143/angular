@@ -19,7 +19,9 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.productService
-      .getProduct()
-      .subscribe((products: any) => (this.productList = products.data));
+      .getProduct({ page: 0, size: 4 })
+      .subscribe((product: any) => {
+        return (this.productList = product.data);
+      });
   }
 }

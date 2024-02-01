@@ -13,8 +13,9 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { AuthService } from '../../../../service/auth.service';
 @Component({
-  selector: 'app-listcategory',
+  selector: 'app-list',
   standalone: true,
   imports: [
     NgFor,
@@ -26,13 +27,13 @@ import {
     ReactiveFormsModule,
     NgIf,
   ],
-  templateUrl: './categorylist.component.html',
-  styleUrl: './categorylist.component.css',
+  templateUrl: './list.component.html',
+  styleUrl: './list.component.css',
   providers: [MessageService, ConfirmationService],
 })
-export class CategorylistComponent {
+export class UserListComponent {
   userForm: FormGroup;
-  categoryList: any[] = [];
+  userList: any[] = [];
   first1: number = 0;
   count: number = 0;
   rows1: number = 4;
@@ -40,7 +41,7 @@ export class CategorylistComponent {
   previousSearchTerm: string = '';
   checkData: boolean = false;
   constructor(
-    private categoryService: CategoryService,
+    private userService: AuthService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private formBuilder: FormBuilder,
@@ -54,21 +55,22 @@ export class CategorylistComponent {
   onPageChange1(event: any) {
     this.first1 = event.first;
     this.rows1 = event.rows;
-    this.categoryService
-      .getPagiCategory({ page: event.first, size: 4 })
+    this.userService
+      .getPagiUser({ page: event.first, size: 4 })
       .subscribe((category: any) => {
-        return (this.categoryList = category.data);
+        return (this.userList = category.data);
       });
   }
   addCategory() {
-    return this.router.navigate(['/admin/category/create']);
+    return this.router.navigate(['/admin/user/create']);
   }
   getAll(check?: any) {
-    this.categoryService
-      .getPagiCategory({ page: check ? check : this.first1, size: 4 })
-      .subscribe((category: any) => {
-        this.count = category.count;
-        return (this.categoryList = category.data);
+    this.userService
+      .getPagiUser({ page: check ? check : this.first1, size: 4 })
+      .subscribe((data: any) => {
+        console.log(data);
+        this.count = data.count;
+        return (this.userList = data.data);
       });
   }
 
@@ -78,61 +80,51 @@ export class CategorylistComponent {
   deleteCategory(id: string) {
     this.confirmationService.confirm({
       accept: () => {
-        return this.categoryService
-          .deleteCategory(id)
-          .subscribe((data: any) => {
-            if (data.status === 0) {
-              this.messageService.add({
-                severity: 'success',
-
-                detail: 'Delete Success',
-              });
-              if (data.count % this.rows1 === 0) {
-                this.getAll(this.first1 - 1);
-              } else {
-                this.getAll();
-              }
+        return this.userService.deleteUser(id).subscribe((data: any) => {
+          if (data.status === 0) {
+            this.messageService.add({
+              severity: 'success',
+              detail: 'Delete Success',
+            });
+            if (data.count % this.rows1 === 0) {
+              this.getAll(this.first1 - 1);
+            } else {
+              this.getAll();
             }
-          });
+          }
+        });
       },
     });
-  }
-  updateCategory(id: string) {
-    return this.router.navigate([`admin/category/${id}`]);
-  }
-  hanFilter(id: string) {
-    return this.router.navigate([`admin/listcategory?id=${id}`]);
   }
 
   ngDoCheck() {
     if (this.searchTerm !== this.previousSearchTerm) {
       const search = this.route.snapshot.params['search'];
       if (search) {
-        this.categoryService
-          .getSearchCategory({
+        this.userService
+          .getSearchUser({
             search: search,
             page: this.first1,
             size: 4,
           })
           .subscribe((data) => {
             if (data.status === 1) {
-              this.router.navigate(['admin/listcategory']);
+              this.router.navigate(['/admin/user/list']);
               return this.messageService.add({
                 severity: 'warn',
-
                 detail: `Không có dữ liệu với từ khóa : ${search}`,
               });
             }
             this.count = data.count;
             this.checkData = true;
-            return (this.categoryList = data.data);
+            return (this.userList = data.data);
           });
       }
     }
   }
   onSubmit() {
     this.router.navigate([
-      'admin/listcategory',
+      '/admin/user/list',
       { search: this.userForm.value.search },
     ]);
     this.searchTerm = this.userForm.value.search;
@@ -144,6 +136,6 @@ export class CategorylistComponent {
   comeBack() {
     this.checkData = false;
     this.getAll();
-    this.router.navigate(['admin/listcategory']);
+    this.router.navigate(['/admin/user/list']);
   }
 }

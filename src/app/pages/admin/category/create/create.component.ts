@@ -11,6 +11,7 @@ import { MessageService, PrimeTemplate } from 'primeng/api';
 import { NgFor, NgIf } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { CategoryService } from '../../../../service/category.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -26,7 +27,8 @@ export class AddCategoryComponent {
   constructor(
     private categoryService: CategoryService,
     private formBuilder: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {
     this.userForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -43,6 +45,10 @@ export class AddCategoryComponent {
             summary: 'Success',
             detail: 'Message Content',
           });
+
+          setTimeout(() => {
+            this.router.navigate(['/admin/listcategory']);
+          }, 1000);
 
           this.userForm.reset();
         }

@@ -12,22 +12,15 @@
 
 <div
   *ngIf="!checkData"
-  style="background-color: rgba(255, 255, 255, 0.1); padding: 20px"
-  class="rounded-lg border w-[1200px] border-gray-200 mt-[50px]"
+  style="
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    box-shadow: 0px 0px 5px 5px pink;
+  "
+  class="rounded-lg border w-[1200px] border-gray-200 mt-[10%]"
 >
-  <div class="rounded-t-lg">
-    <div class="flex justify-between items-center">
-      <div class="card flex justify-content-center">
-        <form [formGroup]="form">
-          <p-multiSelect
-            [options]="cities"
-            (onChange)="onSelectChange($event)"
-            formControlName="selectedCities"
-            optionLabel="name"
-            placeholder="Select Category..."
-          ></p-multiSelect>
-        </form>
-      </div>
+  <div class="overflow-x-auto rounded-t-lg">
+    <div class="flex justify-between items-center" style="margin-left: 7%">
       <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="w-[300px]">
         <label
           for="default-search"
@@ -55,7 +48,6 @@
             </svg>
           </div>
           <input
-            autocomplete="off"
             formControlName="search"
             type="text"
             id="default-search"
@@ -69,106 +61,25 @@
           >
             Search
           </button>
-          <div
-            *ngIf="modalSearchDebouce"
-            class="absolute w-[300px] max-w-sm border border-gray-600 bg-gray-100 px-4 py-8 sm:px-6 lg:px-8"
-            aria-modal="true"
-            role="dialog"
-            tabindex="-1"
-            style="top: 50px; left: 0"
-          >
-            <div
-              *ngIf="loading"
-              class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-              role="status"
-            >
-              <span
-                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                >Loading...</span
-              >
-            </div>
-            <div *ngIf="!loading && serachDebouce[0]" class="mt-4 space-y-6">
-              <ul
-                class="space-y-4"
-                style="max-height: 200px; overflow-y: scroll"
-              >
-                <li
-                  *ngFor="let product of serachDebouce"
-                  class="flex items-center gap-4"
-                >
-                  <img
-                    [src]="product.image"
-                    alt=""
-                    class="h-16 w-16 rounded object-cover"
-                  />
-
-                  <div>
-                    <h3 class="text-sm text-gray-900">{{ product.title }}</h3>
-
-                    <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
-                      <div>
-                        <dt class="inline">Category:</dt>
-                        <dd class="inline">
-                          {{ product.categoryId.name }}
-                        </dd>
-                      </div>
-
-                      <div>
-                        <dt class="inline">Price:</dt>
-                        <dd class="inline">${{ product.price }}</dd>
-                      </div>
-                    </dl>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div *ngIf="!loading" class="">
-              <h4 *ngIf="!serachDebouce[0]">No Result</h4>
-            </div>
-          </div>
         </div>
       </form>
     </div>
-
     <table
-      style="border-radius: 10px; margin: 20px 0"
-      class="min-w-full divide-y-2 bg-white text-sm"
+      style="border-radius: 10px"
+      class="min-w-full divide-y-2 divide-gray-200 my-[20px] bg-white text-sm"
     >
       <thead class="ltr:text-left rtl:text-right">
         <tr>
           <th
             scope="col"
-            class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
+            class="whitespace-nowrap px-4 py-2 font-bold text-gray-900"
           >
-            Product name
+            Email
           </th>
+
           <th
             scope="col"
-            class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
-          >
-            Image
-          </th>
-          <th
-            scope="col"
-            class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
-          >
-            Category
-          </th>
-          <th
-            scope="col"
-            class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
-          >
-            Description
-          </th>
-          <th
-            scope="col"
-            class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
-          >
-            Price
-          </th>
-          <th
-            scope="col"
-            class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
+            class="whitespace-nowrap px-4 py-2 font-bold text-gray-900"
           >
             Action
           </th>
@@ -177,46 +88,30 @@
 
       <tbody class="divide-y divide-gray-200">
         <tr
-          *ngFor="let product of productList"
+          *ngFor="let user of userList"
           class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
         >
           <th
             scope="row"
-            class="px-6 py-4 font-medium text-gray-900 dark:text-white"
+            class="mt-[10px] px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
           >
-            {{ product.title }}
+            <a href="/admin/products?id={{ user._id }}">
+              {{ user.email }}
+            </a>
           </th>
-          <td class="px-6 py-4">
-            <img [src]="product.image" width="50" height="50" alt="" />
-          </td>
-          <td class="px-6 py-4">{{ product.categoryId.name }}</td>
-          <td class="px-6 py-4">{{ product.description }}</td>
-          <td class="px-6 py-4">${{ product.price }}</td>
-          <td class="px-6 py-4">
+          <td class="flex justify-center items-center mt-2">
             <button
-              (click)="deleteProduct(product._id)"
+              (click)="deleteCategory(user._id)"
               class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
             >
               Delete
-            </button>
-            <button
-              (click)="updateProduct(product._id)"
-              class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
-            >
-              Update
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-    <button
-      (click)="addProduct()"
-      type="button"
-      class="ml-[85%] text-white m-[20px] bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-    >
-      Add Product
-    </button>
   </div>
+
   <div class="rounded-b-lg border-t border-gray-200 px-4 py-2">
     <div class="flex align-items-center justify-content-center">
       <div>
@@ -232,6 +127,14 @@
         ></p-paginator>
       </div>
     </div>
+    <button
+      style="margin-left: 80%"
+      (click)="addCategory()"
+      type="button"
+      class="text-white m-[20px] bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+    >
+      Add User
+    </button>
   </div>
 </div>
 <div
@@ -239,7 +142,7 @@
   style="background-color: rgba(255, 255, 255, 0.1); padding: 20px"
   class="rounded-lg border w-[1200px] border-gray-200"
 >
-  <div class="rounded-t-lg">
+  <div class="overflow-x-auto rounded-t-lg">
     <div class="flex justify-between items-center">
       <button
         (click)="comeBack()"
@@ -248,17 +151,6 @@
       >
         Quay lại
       </button>
-      <div class="card flex justify-content-center">
-        <form [formGroup]="form">
-          <p-multiSelect
-            [options]="cities"
-            (onChange)="onSelectChange($event)"
-            formControlName="selectedCities"
-            optionLabel="name"
-            placeholder="Select Category..."
-          ></p-multiSelect>
-        </form>
-      </div>
       <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="w-[300px]">
         <label
           for="default-search"
@@ -303,8 +195,8 @@
       </form>
     </div>
     <table
-      style="border-radius: 10px; margin: 20px 0"
-      class="min-w-full divide-y-2 bg-white text-sm"
+      style="border-radius: 10px"
+      class="min-w-full divide-y-2 divide-gray-200 my-[20px] bg-white text-sm"
     >
       <thead class="ltr:text-left rtl:text-right">
         <tr>
@@ -312,34 +204,9 @@
             scope="col"
             class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
           >
-            Product name
-          </th>
-          <th
-            scope="col"
-            class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
-          >
-            Image
-          </th>
-          <th
-            scope="col"
-            class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
-          >
-            Category
+            Email
           </th>
 
-          <th
-            scope="col"
-            class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
-          >
-            Description
-          </th>
-
-          <th
-            scope="col"
-            class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
-          >
-            Price
-          </th>
           <th
             scope="col"
             class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
@@ -351,34 +218,23 @@
 
       <tbody class="divide-y divide-gray-200">
         <tr
-          *ngFor="let product of productList"
+          *ngFor="let user of userList"
           class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
         >
           <th
             scope="row"
-            class="px-6 py-4 font-medium text-gray-900 dark:text-white"
+            class="mt-[10px] px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
           >
-            {{ product.title }}
+            <a href="/admin/products?id={{ user._id }}">
+              {{ user.email }}
+            </a>
           </th>
-          <td class="px-6 py-4">
-            <img [src]="product.image" width="50" height="50" alt="" />
-          </td>
-          <td class="px-6 py-4">{{ product.categoryId.name }}</td>
-          <td class="px-6 py-4">{{ product.description }}</td>
-
-          <td class="px-6 py-4">${{ product.price }}</td>
-          <td class="px-6 py-4">
+          <td class="flex justify-center items-center mt-2">
             <button
-              (click)="deleteProduct(product._id)"
+              (click)="deleteCategory(user._id)"
               class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
             >
               Delete
-            </button>
-            <button
-              (click)="updateProduct(product._id)"
-              class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
-            >
-              Update
             </button>
           </td>
         </tr>
