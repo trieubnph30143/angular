@@ -1,13 +1,12 @@
-<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Add</h3>
-<p-toast></p-toast>
+<p-toast> </p-toast>
 <!-- Modal body -->
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
   <div class="grid gap-4 mb-4 sm:grid-cols-2">
-    <div class="sm:col-span-3">
+    <div class="sm:col-span-3 mt-[150px] ml-[150px]">
       <label
         for="title"
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >NameCategory</label
+        >Name Category</label
       >
       <input
         formControlName="name"
@@ -26,7 +25,7 @@
   </div>
   <button
     type="submit"
-    class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+    class="ml-[150px] text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
   >
     Create
   </button>
